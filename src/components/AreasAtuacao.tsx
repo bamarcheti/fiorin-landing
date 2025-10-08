@@ -21,7 +21,7 @@ export const AreasAtuacao = () => {
   ];
 
   return (
-    <section className="py-20 px-6">
+    <section id="areas" className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-heading text-gold text-center mb-16">
           Áreas de Atuação

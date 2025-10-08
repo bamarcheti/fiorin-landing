@@ -1,6 +1,6 @@
 export const Sobre = () => {
   return (
-    <section className="py-20 px-6 bg-navy-light">
+    <section id="sobre" className="py-20 px-6 bg-navy-light">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-heading text-gold text-center mb-12">
           Conheça o nosso escritório
