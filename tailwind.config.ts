@@ -13,7 +13,19 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        heading: ['Playfair Display', 'serif'],
+        body: ['Inter', 'sans-serif'],
+      },
       colors: {
+        gold: {
+          DEFAULT: "hsl(var(--gold))",
+          muted: "hsl(var(--gold-muted))",
+        },
+        navy: {
+          DEFAULT: "hsl(var(--navy))",
+          light: "hsl(var(--navy-light))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
