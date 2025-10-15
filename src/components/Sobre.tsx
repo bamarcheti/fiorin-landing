@@ -42,7 +42,7 @@ export const Sobre = () => {
               <img 
                 src={advogadoImg} 
                 alt="Paulo Sérgio Fiorin - Advogado especialista" 
-                className="w-full max-w-[250px] h-auto rounded-lg shadow-lg"
+                className="w-full max-w-[250px] aspect-square object-cover rounded-lg shadow-lg"
               />
             </div>
           </div>
