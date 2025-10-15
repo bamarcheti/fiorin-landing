@@ -21,10 +21,10 @@ export const Sobre = () => {
           </p>
         </div>
         
-        <div className="pt-12 border-t border-border mt-12">
-          <h3 className="text-2xl font-heading text-gold mb-8 text-center">O Especialista</h3>
+        <div className="pt-12 border-t border-border mt-12 max-w-5xl mx-auto">
+          <h3 className="text-2xl font-heading text-gold mb-8">O Especialista</h3>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-[1fr,300px] gap-12 items-start">
             <div className="space-y-4 text-foreground/80 text-lg leading-relaxed">
               <p>
                 O Escritório Fiorin Advocacia e Consultoria Jurídica foi criado pelo Advogado{" "}
@@ -38,11 +38,11 @@ export const Sobre = () => {
               </p>
             </div>
             
-            <div className="flex justify-center">
+            <div className="flex justify-center md:justify-end">
               <img 
                 src={advogadoImg} 
                 alt="Paulo Sérgio Fiorin - Advogado especialista" 
-                className="w-full max-w-md h-auto rounded-lg shadow-lg"
+                className="w-full max-w-[250px] h-auto rounded-lg shadow-lg"
               />
             </div>
           </div>
