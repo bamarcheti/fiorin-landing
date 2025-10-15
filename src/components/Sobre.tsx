@@ -22,20 +22,22 @@ export const Sobre = () => {
         </div>
         
         <div className="pt-12 border-t border-border mt-12 max-w-5xl mx-auto">
-          <h3 className="text-2xl font-heading text-gold mb-8">O Especialista</h3>
-          
-          <div className="grid md:grid-cols-[1fr,300px] gap-12 items-start">
-            <div className="space-y-4 text-foreground/80 text-lg leading-relaxed">
-              <p>
-                O Escritório Fiorin Advocacia e Consultoria Jurídica foi criado pelo Advogado{" "}
-                <span className="text-gold font-medium">Paulo Sérgio Fiorin</span>, Mestre em Direito pela 
-                Universidade Federal de Mato Grosso do Sul, especialista em Direito Trabalhista e Previdenciário.
-              </p>
-              <p>
-                Sua proposta é atender os clientes de forma ética nas informações processuais, 
-                zelando pelo resultado e disponibilizando canais de atendimento que ofereçam 
-                segurança e confiabilidade ao cliente.
-              </p>
+          <div className="grid md:grid-cols-[1fr,320px] gap-12 items-start">
+            <div>
+              <h3 className="text-2xl font-heading text-gold mb-6">O Especialista</h3>
+              
+              <div className="space-y-4 text-foreground/80 text-lg leading-relaxed">
+                <p>
+                  O Escritório Fiorin Advocacia e Consultoria Jurídica foi criado pelo Advogado{" "}
+                  <span className="text-gold font-medium">Paulo Sérgio Fiorin</span>, Mestre em Direito pela 
+                  Universidade Federal de Mato Grosso do Sul, especialista em Direito Trabalhista e Previdenciário.
+                </p>
+                <p>
+                  Sua proposta é atender os clientes de forma ética nas informações processuais, 
+                  zelando pelo resultado e disponibilizando canais de atendimento que ofereçam 
+                  segurança e confiabilidade ao cliente.
+                </p>
+              </div>
             </div>
             
             <div className="flex justify-center md:justify-end">
