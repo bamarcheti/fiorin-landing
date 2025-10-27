@@ -18,6 +18,7 @@ export const AreasAtuacao = () => {
     "Adicional de periculosidade",
     "Adicional noturno",
     "Estabilidade da gestante",
+    "Direitos das gestantes",
     "Acidente de trabalho",
   ];
 
