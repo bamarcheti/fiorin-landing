@@ -3,61 +3,45 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ArrowLeft, MessageCircle } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getPostBySlug } from "@/data/blogPosts";
 
 const BlogPost = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const whatsappLink = "https://wa.me/556796938634?text=Olá,%20vim%20do%20Blog%20e%20gostaria%20de%20falar%20com%20um%20especialista.";
 
-  // Aqui você pode buscar o conteúdo do post baseado no slug
-  // Por enquanto, vou usar um conteúdo de exemplo
-  const post = {
-    title: "Principais Direitos Trabalhistas na Demissão",
-    date: "15 de Setembro, 2024",
-    readTime: "5 min",
-    category: "Trabalhista",
-    content: `
-      <h2>Introdução</h2>
-      <p>A demissão sem justa causa é um momento delicado na vida de qualquer trabalhador. É fundamental conhecer seus direitos para garantir que tudo seja feito conforme a legislação trabalhista brasileira.</p>
+  const post = slug ? getPostBySlug(slug) : undefined;
 
-      <h2>Principais Direitos na Demissão Sem Justa Causa</h2>
-      
-      <h3>1. Aviso Prévio</h3>
-      <p>O trabalhador tem direito a receber o aviso prévio, que pode ser trabalhado ou indenizado. O período mínimo é de 30 dias, podendo ser acrescido de 3 dias por ano trabalhado, até o máximo de 90 dias.</p>
+  if (!post) {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <main className="pt-32 pb-20 px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl font-heading text-gold mb-6">
+              Artigo não encontrado
+            </h1>
+            <p className="text-foreground/80 mb-8">
+              O artigo que você está procurando não existe ou foi removido.
+            </p>
+            <Button
+              onClick={() => navigate("/blog")}
+              className="bg-gold hover:bg-gold/90 text-primary-foreground"
+            >
+              <ArrowLeft className="mr-2" size={20} />
+              Voltar para o Blog
+            </Button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
-      <h3>2. Saldo de Salário</h3>
-      <p>Todos os dias trabalhados no mês da demissão devem ser pagos proporcionalmente.</p>
-
-      <h3>3. Férias Vencidas e Proporcionais</h3>
-      <p>As férias não gozadas devem ser pagas com o adicional de 1/3 constitucional, além das férias proporcionais ao período trabalhado.</p>
-
-      <h3>4. 13º Salário Proporcional</h3>
-      <p>O trabalhador tem direito ao 13º proporcional aos meses trabalhados no ano da demissão.</p>
-
-      <h3>5. Multa de 40% do FGTS</h3>
-      <p>Na demissão sem justa causa, o empregador deve pagar uma multa de 40% sobre o saldo do FGTS depositado durante o contrato.</p>
-
-      <h3>6. Saque do FGTS</h3>
-      <p>O trabalhador poderá sacar todo o saldo depositado na conta do FGTS.</p>
-
-      <h3>7. Seguro-Desemprego</h3>
-      <p>Dependendo do tempo de trabalho e das contribuições anteriores, o trabalhador pode ter direito ao seguro-desemprego.</p>
-
-      <h2>Prazos para Pagamento</h2>
-      <p>As verbas rescisórias devem ser pagas em até 10 dias após a demissão. O não cumprimento deste prazo pode gerar multa a favor do trabalhador.</p>
-
-      <h2>Quando Procurar um Advogado?</h2>
-      <p>É recomendável buscar orientação jurídica especializada quando:</p>
-      <ul>
-        <li>Houver divergência nos valores das verbas rescisórias</li>
-        <li>O empregador não efetuar o pagamento no prazo legal</li>
-        <li>Existirem horas extras, adicionais ou outras verbas não pagas</li>
-        <li>Você tiver dúvidas sobre seus direitos</li>
-      </ul>
-
-      <h2>Conclusão</h2>
-      <p>Conhecer seus direitos trabalhistas é essencial para garantir que a rescisão contratual seja feita de forma justa e legal. Em caso de dúvidas ou problemas, não hesite em buscar auxílio jurídico especializado.</p>
-    `,
+  const getCategoryColor = (category: string) => {
+    return category === "Trabalhista" 
+      ? "bg-gold/20 text-gold border-gold/30" 
+      : "bg-primary/20 text-primary border-primary/30";
   };
 
   return (
@@ -79,7 +63,7 @@ const BlogPost = () => {
           {/* Article Header */}
           <article>
             <div className="mb-8">
-              <span className="inline-block text-sm font-medium px-4 py-2 rounded-full border bg-gold/20 text-gold border-gold/30 mb-4">
+              <span className={`inline-block text-sm font-medium px-4 py-2 rounded-full border ${getCategoryColor(post.category)} mb-4`}>
                 {post.category}
               </span>
               
@@ -97,6 +81,15 @@ const BlogPost = () => {
                   {post.readTime} de leitura
                 </span>
               </div>
+            </div>
+
+            {/* Featured Image */}
+            <div className="mb-12 rounded-lg overflow-hidden">
+              <img 
+                src={post.image} 
+                alt={post.title}
+                className="w-full h-auto object-cover"
+              />
             </div>
 
             {/* Article Content */}
