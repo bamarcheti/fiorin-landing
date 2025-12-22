@@ -195,17 +195,24 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="category">Categoria</Label>
-                    <select
-                      id="category"
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                    >
-                      <option value="Trabalhista">Trabalhista</option>
-                      <option value="Previdenciário">Previdenciário</option>
-                      <option value="Civil">Civil</option>
-                      <option value="Consumidor">Consumidor</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        id="category"
+                        className="flex h-10 w-full appearance-none rounded-md border border-input bg-background pl-3 pr-10 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option value="Trabalhista">Trabalhista</option>
+                        <option value="Previdenciário">Previdenciário</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Consumidor">Consumidor</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                        <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="space-y-2">

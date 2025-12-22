@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock, LogIn } from "lucide-react";
+import { Mail, Lock, LogIn, Home } from "lucide-react";
 
 const AdminLogin = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,7 +47,18 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative">
+      {/* Home button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => navigate("/")}
+        className="absolute top-4 right-4 text-muted-foreground hover:text-primary hover:bg-primary/10"
+        aria-label="Ir para página inicial"
+      >
+        <Home className="h-5 w-5" />
+      </Button>
+
       <div className="w-full max-w-md">
         <div className="bg-card border border-border rounded-lg p-8 shadow-lg">
           <div className="text-center mb-8">
