@@ -16,27 +16,33 @@ export type Database = {
     Tables: {
       posts: {
         Row: {
+          category: string | null
           content: string | null
           created_at: string
           id: number
+          image_url: string | null
           published_date: string
           reading_time: string | null
           subtitle: string | null
           title: string | null
         }
         Insert: {
+          category?: string | null
           content?: string | null
           created_at?: string
           id?: number
+          image_url?: string | null
           published_date: string
           reading_time?: string | null
           subtitle?: string | null
           title?: string | null
         }
         Update: {
+          category?: string | null
           content?: string | null
           created_at?: string
           id?: number
+          image_url?: string | null
           published_date?: string
           reading_time?: string | null
           subtitle?: string | null
