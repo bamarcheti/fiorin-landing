@@ -228,6 +228,7 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                 </div>
 
                 {/* Data e Imagem */}
+                {/* Data e Imagem */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="date">Data de Publicação</Label>
@@ -237,6 +238,7 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                       value={publishedDate}
                       onChange={(e) => setPublishedDate(e.target.value)}
                       required
+                      className="[&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:sepia [&::-webkit-calendar-picker-indicator]:saturate-[10] [&::-webkit-calendar-picker-indicator]:hue-rotate-[15deg]"
                     />
                   </div>
                   {/* <div className="space-y-2">
