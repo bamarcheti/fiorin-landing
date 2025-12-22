@@ -12,7 +12,7 @@ export const Hero = () => {
           <img 
             src={logo} 
             alt="Fiorin Advocacia" 
-            className="w-80 h-auto"
+            className="w-96 h-auto"
           />
         </div>
         
