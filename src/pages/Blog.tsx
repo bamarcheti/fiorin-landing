@@ -1,21 +1,71 @@
-import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/Navbar";
 import { Card } from "@/components/ui/card";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { ArrowRight, Calendar, Clock, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { blogPosts } from "@/data/blogPosts";
+
+interface BlogPost {
+  id: number;
+  title: string;
+  subtitle: string | null;
+  content: string | null;
+  published_date: string;
+  reading_time: string | null;
+  category?: string;
+  image?: string;
+}
 
 const Blog = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Função para buscar os posts do Supabase
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("posts")
+          .select("*")
+          .order("published_date", { ascending: false }); // Ordena do mais recente para o mais antigo
+
+        if (error) throw error;
+
+        if (data) {
+          setPosts(data);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const getCategoryColor = (category: string) => {
-    return category === "Trabalhista" 
-      ? "bg-gold/20 text-gold border-gold/30" 
+    return category === "Trabalhista"
+      ? "bg-gold/20 text-gold border-gold/30"
       : "bg-primary/20 text-primary border-primary/30";
+  };
+
+  // Função auxiliar para formatar a data (YYYY-MM-DD -> DD/MM/YYYY)
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("pt-BR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(date);
   };
 
   return (
     <div className="min-h-screen">
       <Navbar />
-      
+
       <main className="pt-32 pb-20 px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -24,64 +74,86 @@ const Blog = () => {
               Blog
             </h1>
             <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-              Veja nossos conteúdos, e entenda melhor seus direitos e como podemos ajudá-lo!
+              Veja nossos conteúdos, e entenda melhor seus direitos e como
+              podemos ajudá-lo!
             </p>
           </div>
 
-          {/* Blog Posts Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <Link 
-                key={post.id} 
-                to={`/blog/${post.id}`}
-                className="group"
-              >
-                <Card className="bg-card border-border overflow-hidden h-full hover:border-gold/50 transition-all duration-300 flex flex-col">
-                  {/* Post Image */}
-                  <div className="aspect-video overflow-hidden">
-                    <img 
-                      src={post.image} 
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className={`text-xs font-medium px-3 py-1 rounded-full border ${getCategoryColor(post.category)}`}>
-                        {post.category}
-                      </span>
-                    </div>
-                    
-                    <h3 className="text-xl font-heading text-gold mb-3 group-hover:text-gold/80 transition-colors">
-                      {post.title}
-                    </h3>
-                    
-                    <p className="text-foreground/70 mb-4 flex-grow">
-                      {post.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-border">
-                      <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={16} />
-                          {post.date}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock size={16} />
-                          {post.readTime}
+          {/* Loading State */}
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="animate-spin text-gold w-12 h-12" />
+            </div>
+          ) : (
+            /* Blog Posts Grid */
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/blog/${post.id}`} // O ID agora virá do banco (ex: 1, 2, 3)
+                  className="group"
+                >
+                  <Card className="bg-card border-border overflow-hidden h-full hover:border-gold/50 transition-all duration-300 flex flex-col">
+                    {/* Post Image - Usando placeholder se não houver imagem no banco */}
+                    {/* <div className="aspect-video overflow-hidden bg-muted">
+                      <img
+                        src={
+                          post.image ||
+                          "https://fiorinadvocacia.com.br/wp-content/uploads/2024/06/Carteira-de-Trabalho.jpg"
+                        }
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div> */}
+
+                    <div className="p-6 flex flex-col flex-grow">
+                      <div className="flex items-center gap-2 mb-4">
+                        <span
+                          className={`text-xs font-medium px-3 py-1 rounded-full border ${getCategoryColor(
+                            post.category || "Direito"
+                          )}`}
+                        >
+                          {post.category || "Direito"}
                         </span>
                       </div>
-                      <ArrowRight 
-                        size={20} 
-                        className="text-gold group-hover:translate-x-1 transition-transform" 
-                      />
+
+                      <h3 className="text-xl font-heading text-gold mb-3 group-hover:text-gold/80 transition-colors line-clamp-2">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-foreground/70 mb-4 flex-grow line-clamp-3">
+                        {post.subtitle ||
+                          "Confira o conteúdo completo clicando aqui."}
+                      </p>
+
+                      <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-border mt-auto">
+                        <div className="flex items-center gap-4">
+                          <span className="flex items-center gap-1">
+                            <Calendar size={16} />
+                            {formatDate(post.published_date)}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock size={16} />
+                            {post.reading_time || "5 min"}
+                          </span>
+                        </div>
+                        <ArrowRight
+                          size={20}
+                          className="text-gold group-hover:translate-x-1 transition-transform"
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {!loading && posts.length === 0 && (
+            <div className="text-center py-10 text-muted-foreground">
+              Nenhum artigo encontrado no momento.
+            </div>
+          )}
         </div>
       </main>
 
