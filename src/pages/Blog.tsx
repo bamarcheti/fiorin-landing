@@ -1,5 +1,6 @@
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { SEO } from "@/components/SEO";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowRight, Calendar, Clock, Loader2 } from "lucide-react";
@@ -63,10 +64,26 @@ const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Blog Jurídico - Artigos sobre Direito Trabalhista e Previdenciário"
+        description="Confira artigos e informações atualizadas sobre Direito Trabalhista e Previdenciário. Entenda seus direitos com a Fiorin Advocacia."
+        canonical="https://fiorinadvocacia.com.br/blog"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          name: "Blog Fiorin Advocacia",
+          description: "Artigos sobre Direito Trabalhista e Previdenciário",
+          url: "https://fiorinadvocacia.com.br/blog",
+          publisher: {
+            "@type": "LegalService",
+            name: "Fiorin Advocacia",
+          },
+        }}
+      />
       <Navbar />
 
-      <main className="pt-32 pb-20 px-6">
+      <main className="pt-32 pb-20 px-6 flex-grow">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
