@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Lock, LogIn, Home } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Home, Lock, LogIn, Mail } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast({
         title: "Campos obrigatórios",
@@ -36,9 +36,10 @@ const AdminLogin = () => {
     if (error) {
       toast({
         title: "Erro ao fazer login",
-        description: error.message === "Invalid login credentials" 
-          ? "Email ou senha inválidos." 
-          : error.message,
+        description:
+          error.message === "Invalid login credentials"
+            ? "Email ou senha inválidos."
+            : error.message,
         variant: "destructive",
       });
     }
