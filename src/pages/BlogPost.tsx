@@ -153,14 +153,16 @@ const BlogPost = () => {
             </div>
 
             {/* CONTEÚDO DO ARTIGO COM FORMATAÇÃO CORRIGIDA */}
-            <div
-              className="blog-content text-foreground/90 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post.content || "" }}
-              style={{
-                fontSize: "1.0625rem",
-                lineHeight: "1.75",
-              }}
-            />
+            <div className="bg-primary/10 rounded-lg border border-primary/20 p-8">
+              <div
+                className="blog-content text-foreground leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: post.content || "" }}
+                style={{
+                  fontSize: "1.0625rem",
+                  lineHeight: "1.75",
+                }}
+              />
+            </div>
 
             <div className="mt-16 p-8 bg-navy-light rounded-lg border border-border text-center">
               <h3 className="text-2xl font-heading text-gold mb-4">
