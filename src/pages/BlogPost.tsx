@@ -1,5 +1,6 @@
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -114,10 +115,47 @@ const BlogPost = () => {
     );
   }
 
+  // Extract plain text for description
+  const getPlainText = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
+
+  const description = post.subtitle || getPlainText(post.content || "").slice(0, 155) + "...";
+
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title={post.title || "Artigo"}
+        description={description}
+        canonical={`https://fiorinadvocacia.com.br/blog/${post.id}`}
+        type="article"
+        article={{
+          publishedTime: post.published_date,
+          author: "Fiorin Advocacia",
+          section: post.category || "Direito",
+        }}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: description,
+          datePublished: post.published_date,
+          author: {
+            "@type": "LegalService",
+            name: "Fiorin Advocacia",
+          },
+          publisher: {
+            "@type": "LegalService",
+            name: "Fiorin Advocacia",
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://fiorinadvocacia.com.br/blog/${post.id}`,
+          },
+        }}
+      />
       <Navbar />
-
       <main className="pt-32 pb-20 px-6 flex-grow">
         <div className="max-w-4xl mx-auto">
           <Button
