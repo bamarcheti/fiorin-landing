@@ -51,7 +51,7 @@ export const Navbar = () => {
             onClick={() => scrollToSection("inicio")}
             className="flex items-center"
           >
-            <img src={logo} alt="Fiorin Advocacia" className="h-24 w-auto" />
+            <img src={logo} alt="Fiorin Advocacia" className="h-28 w-auto" />
           </button>
 
           {/* Desktop Menu */}
