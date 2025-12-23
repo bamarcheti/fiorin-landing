@@ -143,20 +143,18 @@ const Blog = () => {
                           "Confira o conteúdo completo clicando aqui."}
                       </p>
 
-                      <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t border-border mt-auto">
-                        <div className="flex items-center gap-4">
-                          <span className="flex items-center gap-1">
-                            <Calendar size={16} />
-                            {formatDate(post.published_date)}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Clock size={16} />
-                            {post.reading_time || "5 min"}
-                          </span>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border mt-auto gap-2">
+                        <div className="flex items-center gap-1 whitespace-nowrap">
+                          <Calendar size={14} className="shrink-0" />
+                          <span>{formatDate(post.published_date)}</span>
+                        </div>
+                        <div className="flex items-center gap-1 whitespace-nowrap">
+                          <Clock size={14} className="shrink-0" />
+                          <span>{post.reading_time || "5 min"}</span>
                         </div>
                         <ArrowRight
-                          size={20}
-                          className="text-gold group-hover:translate-x-1 transition-transform"
+                          size={18}
+                          className="text-gold group-hover:translate-x-1 transition-transform shrink-0"
                         />
                       </div>
                     </div>
