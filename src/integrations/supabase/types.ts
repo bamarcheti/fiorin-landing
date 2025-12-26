@@ -16,8 +16,9 @@ export type Database = {
     Tables: {
       posts: {
         Row: {
-          category: string | null
+          category: Database["public"]["Enums"]["Categoria"] | null
           content: string | null
+          content_json: Json | null
           created_at: string
           id: number
           image_url: string | null
@@ -27,8 +28,9 @@ export type Database = {
           title: string | null
         }
         Insert: {
-          category?: string | null
+          category?: Database["public"]["Enums"]["Categoria"] | null
           content?: string | null
+          content_json?: Json | null
           created_at?: string
           id?: number
           image_url?: string | null
@@ -38,8 +40,9 @@ export type Database = {
           title?: string | null
         }
         Update: {
-          category?: string | null
+          category?: Database["public"]["Enums"]["Categoria"] | null
           content?: string | null
+          content_json?: Json | null
           created_at?: string
           id?: number
           image_url?: string | null
@@ -58,7 +61,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      Categoria: "Trabalhista" | "Previdenciário" | "Civil" | "Consumidor"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -185,6 +188,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      Categoria: ["Trabalhista", "Previdenciário", "Civil", "Consumidor"],
+    },
   },
 } as const
