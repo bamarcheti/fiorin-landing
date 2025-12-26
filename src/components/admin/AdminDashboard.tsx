@@ -7,8 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { FileText, LogOut } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Importa o estilo do editor
+import TiptapEditor from "./TiptapEditor";
 import { useNavigate } from "react-router-dom";
 
 interface AdminDashboardProps {
@@ -30,16 +29,7 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
   const [category, setCategory] = useState("Trabalhista");
   const { toast } = useToast();
 
-  // Configuração da Barra de Ferramentas do Editor
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }], // Títulos H1, H2, H3
-      ["bold", "italic", "underline", "strike"], // Negrito, Itálico...
-      [{ color: [] }, { background: [] }], // Cor da fonte e fundo
-      [{ list: "ordered" }, { list: "bullet" }], // Listas
-      ["link", "clean"], // Links e limpar formatação
-    ],
-  };
+  // Calculate reading time automatically - strip HTML tags for word count
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -59,7 +49,8 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
 
   // Calculate reading time automatically
   const readingTime = useMemo(() => {
-    const words = content.trim().split(/\s+/).filter(Boolean).length;
+    const plainText = content.replace(/<[^>]*>/g, "").trim();
+    const words = plainText.split(/\s+/).filter(Boolean).length;
     const minutes = Math.ceil(words / 200);
     return minutes > 0 ? `${minutes} min de leitura` : "0 min de leitura";
   }, [content]);
@@ -254,18 +245,10 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                   </div> */}
                 </div>
 
-                {/* EDITOR DE TEXTO RICO (NOVO) */}
+                {/* EDITOR DE TEXTO RICO */}
                 <div className="space-y-2">
                   <Label>Conteúdo do Artigo</Label>
-                  <div className="bg-white text-black rounded-md overflow-hidden">
-                    <ReactQuill
-                      theme="snow"
-                      value={content}
-                      onChange={setContent}
-                      modules={modules}
-                      className="h-64 mb-12" // Altura do editor
-                    />
-                  </div>
+                  <TiptapEditor content={content} onChange={setContent} />
                 </div>
 
                 <Button
