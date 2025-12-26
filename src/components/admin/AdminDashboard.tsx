@@ -1,3 +1,4 @@
+import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { FileText, LogOut } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import TiptapEditor from "./TiptapEditor";
 import { useNavigate } from "react-router-dom";
 
 interface AdminDashboardProps {
@@ -199,8 +199,18 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                         <option value="Consumidor">Consumidor</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                        <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        <svg
+                          className="h-4 w-4 text-muted-foreground"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 9l-7 7-7-7"
+                          />
                         </svg>
                       </div>
                     </div>
@@ -248,7 +258,8 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                 {/* EDITOR DE TEXTO RICO */}
                 <div className="space-y-2">
                   <Label>Conteúdo do Artigo</Label>
-                  <TiptapEditor content={content} onChange={setContent} />
+                  {/* <SimpleEditor content={content} onChange={setContent} /> */}
+                  <SimpleEditor />
                 </div>
 
                 <Button
