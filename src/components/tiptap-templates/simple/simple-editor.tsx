@@ -71,7 +71,7 @@ import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle"
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 
 // --- Styles ---
-import "@/components/tiptap-templates/simple/simple-editor.scss"
+import "@/components/tiptap-templates/simple/simple-editor.css"
 
 interface SimpleEditorProps {
   content?: string;
