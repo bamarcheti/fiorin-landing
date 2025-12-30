@@ -258,8 +258,7 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                 {/* EDITOR DE TEXTO RICO */}
                 <div className="space-y-2">
                   <Label>Conteúdo do Artigo</Label>
-                  {/* <SimpleEditor content={content} onChange={setContent} /> */}
-                  <SimpleEditor />
+                  <SimpleEditor content={content} onChange={setContent} />
                 </div>
 
                 <Button
