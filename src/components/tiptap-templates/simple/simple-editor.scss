@@ -55,15 +55,16 @@ body,
 }
 
 .simple-editor-wrapper {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 400px;
   overflow: auto;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  background: hsl(var(--background));
 }
 
 .simple-editor-content {
-  max-width: 648px;
   width: 100%;
-  margin: 0 auto;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -72,11 +73,10 @@ body,
 
 .simple-editor-content .tiptap.ProseMirror.simple-editor {
   flex: 1;
-  padding: 3rem 3rem 30vh;
+  padding: 1rem 1.5rem;
+  min-height: 300px;
 }
 
-@media screen and (max-width: 480px) {
-  .simple-editor-content .tiptap.ProseMirror.simple-editor {
-    padding: 1rem 1.5rem 30vh;
-  }
+.simple-editor-content .tiptap.ProseMirror.simple-editor:focus {
+  outline: none;
 }
