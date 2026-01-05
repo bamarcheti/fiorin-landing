@@ -39,7 +39,6 @@ const BlogPost = () => {
       if (!slug) return;
 
       try {
-        // Corrigido: converter slug para número se necessário
         const postId = parseInt(slug, 10);
 
         if (isNaN(postId)) {
@@ -116,13 +115,13 @@ const BlogPost = () => {
     );
   }
 
-  // Extract plain text for description
   const getPlainText = (html: string) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
   };
 
-  const description = post.subtitle || getPlainText(post.content || "").slice(0, 155) + "...";
+  const description =
+    post.subtitle || getPlainText(post.content || "").slice(0, 155) + "...";
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -191,8 +190,8 @@ const BlogPost = () => {
               </div>
             </div>
 
-            {/* CONTEÚDO DO ARTIGO COM FORMATAÇÃO SANITIZADA */}
-            <div className="bg-primary/10 rounded-lg border border-primary/20 p-8">
+            {/* CONTEÚDO DO ARTIGO COM FORMATAÇÃO MELHORADA */}
+            <div className="bg-card/50 rounded-lg border border-border p-8 md:p-12">
               <BlogContent content={post.content || ""} />
             </div>
 

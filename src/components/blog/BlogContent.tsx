@@ -39,14 +39,16 @@ const BlogContent = ({ content, className = "" }: BlogContentProps) => {
     ALLOW_DATA_ATTR: false,
   });
 
+  // Processar o conteúdo para adicionar classes de indentação baseado em estrutura
+  const processedContent = sanitizedContent.replace(
+    /<li>(<strong>.*?<\/strong>)/g,
+    '<li class="font-semibold">$1'
+  );
+
   return (
     <div
-      className={`blog-content prose prose-sm sm:prose-base max-w-none text-foreground leading-relaxed ${className}`}
-      dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      style={{
-        fontSize: "1.0625rem",
-        lineHeight: "1.75",
-      }}
+      className={`blog-content ${className}`}
+      dangerouslySetInnerHTML={{ __html: processedContent }}
     />
   );
 };
