@@ -1,4 +1,3 @@
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { FileText, LogOut } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Importa o estilo do editor
 import { useNavigate } from "react-router-dom";
 
 interface AdminDashboardProps {
@@ -29,7 +30,16 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
   const [category, setCategory] = useState("Trabalhista");
   const { toast } = useToast();
 
-  // Calculate reading time automatically - strip HTML tags for word count
+  // Configuração da Barra de Ferramentas do Editor
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }], // Títulos H1, H2, H3
+      ["bold", "italic", "underline", "strike"], // Negrito, Itálico...
+      [{ color: [] }, { background: [] }], // Cor da fonte e fundo
+      [{ list: "ordered" }, { list: "bullet" }], // Listas
+      ["link", "clean"], // Links e limpar formatação
+    ],
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -49,8 +59,7 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
 
   // Calculate reading time automatically
   const readingTime = useMemo(() => {
-    const plainText = content.replace(/<[^>]*>/g, "").trim();
-    const words = plainText.split(/\s+/).filter(Boolean).length;
+    const words = content.trim().split(/\s+/).filter(Boolean).length;
     const minutes = Math.ceil(words / 200);
     return minutes > 0 ? `${minutes} min de leitura` : "0 min de leitura";
   }, [content]);
@@ -199,18 +208,8 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                         <option value="Consumidor">Consumidor</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                        <svg
-                          className="h-4 w-4 text-muted-foreground"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 9l-7 7-7-7"
-                          />
+                        <svg className="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </div>
                     </div>
@@ -255,10 +254,18 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                   </div> */}
                 </div>
 
-                {/* EDITOR DE TEXTO RICO */}
+                {/* EDITOR DE TEXTO RICO (NOVO) */}
                 <div className="space-y-2">
                   <Label>Conteúdo do Artigo</Label>
-                  <SimpleEditor content={content} onChange={setContent} />
+                  <div className="bg-white text-black rounded-md overflow-hidden">
+                    <ReactQuill
+                      theme="snow"
+                      value={content}
+                      onChange={setContent}
+                      modules={modules}
+                      className="h-64 mb-12" // Altura do editor
+                    />
+                  </div>
                 </div>
 
                 <Button
