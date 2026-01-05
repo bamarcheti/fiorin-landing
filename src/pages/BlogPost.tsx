@@ -1,3 +1,4 @@
+import BlogContent from "@/components/blog/BlogContent";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { SEO } from "@/components/SEO";
@@ -190,16 +191,9 @@ const BlogPost = () => {
               </div>
             </div>
 
-            {/* CONTEÚDO DO ARTIGO COM FORMATAÇÃO CORRIGIDA */}
+            {/* CONTEÚDO DO ARTIGO COM FORMATAÇÃO SANITIZADA */}
             <div className="bg-primary/10 rounded-lg border border-primary/20 p-8">
-              <div
-                className="blog-content text-foreground leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: post.content || "" }}
-                style={{
-                  fontSize: "1.0625rem",
-                  lineHeight: "1.75",
-                }}
-              />
+              <BlogContent content={post.content || ""} />
             </div>
 
             <div className="mt-16 p-8 bg-navy-light rounded-lg border border-border text-center">

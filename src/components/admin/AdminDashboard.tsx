@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import RichTextEditor from "@/components/editor/RichTextEditor";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
@@ -7,8 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { FileText, LogOut } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Importa o estilo do editor
 import { useNavigate } from "react-router-dom";
 
 interface AdminDashboardProps {
@@ -29,17 +28,6 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [category, setCategory] = useState("Trabalhista");
   const { toast } = useToast();
-
-  // Configuração da Barra de Ferramentas do Editor
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }], // Títulos H1, H2, H3
-      ["bold", "italic", "underline", "strike"], // Negrito, Itálico...
-      [{ color: [] }, { background: [] }], // Cor da fonte e fundo
-      [{ list: "ordered" }, { list: "bullet" }], // Listas
-      ["link", "clean"], // Links e limpar formatação
-    ],
-  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -254,18 +242,13 @@ const AdminDashboard = ({ user }: AdminDashboardProps) => {
                   </div> */}
                 </div>
 
-                {/* EDITOR DE TEXTO RICO (NOVO) */}
+                {/* EDITOR DE TEXTO RICO */}
                 <div className="space-y-2">
                   <Label>Conteúdo do Artigo</Label>
-                  <div className="bg-white text-black rounded-md overflow-hidden">
-                    <ReactQuill
-                      theme="snow"
-                      value={content}
-                      onChange={setContent}
-                      modules={modules}
-                      className="h-64 mb-12" // Altura do editor
-                    />
-                  </div>
+                  <RichTextEditor
+                    content={content}
+                    onChange={setContent}
+                  />
                 </div>
 
                 <Button
