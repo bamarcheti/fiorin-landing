@@ -19,7 +19,7 @@ export const SEO = ({
   description,
   canonical,
   type = "website",
-  image = "https://fiorinadvocacia.com.br/og-image.jpg",
+  image = "https://fiorinadvocacia.com.br/og-image.png",
   article,
   jsonLd,
 }: SEOProps) => {
@@ -44,8 +44,8 @@ export const SEO = ({
 
     // Basic SEO
     updateMeta("description", description);
-    updateMeta("author", "Fiorin Advocacia");
-    updateMeta("robots", "index, follow");
+    updateMeta("author", "Fiorin Advocacia - Paulo Sérgio Fiorin");
+    updateMeta("robots", "index, follow, max-image-preview:large");
 
     // Open Graph
     updateMeta("og:title", fullTitle, true);
@@ -53,11 +53,14 @@ export const SEO = ({
     updateMeta("og:type", type, true);
     updateMeta("og:site_name", siteName, true);
     updateMeta("og:image", image, true);
+    updateMeta("og:image:width", "1200", true);
+    updateMeta("og:image:height", "630", true);
+    updateMeta("og:image:alt", `${siteName} - Logo`, true);
     updateMeta("og:locale", "pt_BR", true);
 
     if (canonical) {
       updateMeta("og:url", canonical, true);
-      
+
       // Update canonical link
       let canonicalLink = document.querySelector('link[rel="canonical"]');
       if (!canonicalLink) {
@@ -88,39 +91,18 @@ export const SEO = ({
     }
 
     // JSON-LD Structured Data
-    const structuredData = jsonLd || {
-      "@context": "https://schema.org",
-      "@type": "LegalService",
-      name: "Fiorin Advocacia",
-      description: "Escritório especializado em Direito Trabalhista e Previdenciário em Campo Grande, MS.",
-      url: "https://fiorinadvocacia.com.br",
-      telephone: "+55 67 9693-8634",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Campo Grande",
-        addressRegion: "MS",
-        addressCountry: "BR",
-      },
-      priceRange: "$$",
-      areaServed: {
-        "@type": "State",
-        name: "Mato Grosso do Sul",
-      },
-      serviceType: ["Direito Trabalhista", "Direito Previdenciário"],
-    };
-
-    let scriptTag = document.querySelector('script[data-seo="json-ld"]');
-    if (!scriptTag) {
-      scriptTag = document.createElement("script");
-      scriptTag.setAttribute("type", "application/ld+json");
-      scriptTag.setAttribute("data-seo", "json-ld");
-      document.head.appendChild(scriptTag);
+    if (jsonLd) {
+      let scriptTag = document.querySelector(
+        'script[data-seo="json-ld-dynamic"]'
+      );
+      if (!scriptTag) {
+        scriptTag = document.createElement("script");
+        scriptTag.setAttribute("type", "application/ld+json");
+        scriptTag.setAttribute("data-seo", "json-ld-dynamic");
+        document.head.appendChild(scriptTag);
+      }
+      scriptTag.textContent = JSON.stringify(jsonLd);
     }
-    scriptTag.textContent = JSON.stringify(structuredData);
-
-    return () => {
-      // Cleanup is optional since we're updating the same elements
-    };
   }, [fullTitle, description, canonical, type, image, article, jsonLd]);
 
   return null;
